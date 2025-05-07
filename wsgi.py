@@ -1,6 +1,9 @@
+import os
 from app import create_app
 
 app = create_app()
 
 if __name__ == "__main__":
-    app.run()
+    # Use the port from environment variables, default to 8080
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
