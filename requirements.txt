@@ -4,3 +4,4 @@ sentence-transformers==2.2.2
 transformers==4.30.2
 huggingface-hub==0.14.1
 torch>=1.13.0
+joblib==1.1.0
