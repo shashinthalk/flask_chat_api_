@@ -1,4 +1,4 @@
-from .chat import chat_bp
+from .fe_communication import fe_communication_bp
 
 def register_routes(app):
-    app.register_blueprint(chat_bp)
+    app.register_blueprint(fe_communication_bp)
