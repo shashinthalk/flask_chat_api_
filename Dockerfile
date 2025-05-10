@@ -17,5 +17,5 @@ EXPOSE 5000
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "wsgi:app"]
 
 # Install OpenSSL
-RUN yum install -y openssl ca-certificates
-RUN update-ca-trust force-enable
+RUN apt-get update && apt-get install -y openssl ca-certificates
+RUN update-ca-certificates
