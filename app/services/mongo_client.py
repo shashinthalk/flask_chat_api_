@@ -15,10 +15,7 @@ def create_db_connection():
     uri = os.getenv("MONGO_URI")
     client = MongoClient(
         uri, 
-        server_api=ServerApi('1'),
-        ssl=True,
-        ssl_cert_reqs=ssl.CERT_NONE,
-        ssl_tls_version=ssl.PROTOCOL_TLSv1_2
+        server_api=ServerApi('1')
     )
     return client
 
