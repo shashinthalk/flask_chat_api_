@@ -3,6 +3,7 @@ import json
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from bson import ObjectId
+import ssl
 
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -10,9 +11,19 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-def load_data_from_db():
+def create_db_connection():
     uri = os.getenv("MONGO_URI")
-    client = MongoClient(uri, server_api=ServerApi('1'))
+    client = MongoClient(
+        uri, 
+        server_api=ServerApi('1'),
+        ssl=True,
+        ssl_cert_reqs=ssl.CERT_NONE,
+        ssl_tls_version=ssl.PROTOCOL_TLSv1_2
+    )
+    return client
+
+def load_data_from_db():
+    client = create_db_connection()
     db = client["personal_data_db"]
     collection = db['qa_data_set']
     docs = list(collection.find({}))
@@ -20,8 +31,7 @@ def load_data_from_db():
     return json_data
 
 def load_data_to_db():
-    uri = os.getenv("MONGO_URI")
-    client = MongoClient(uri, server_api=ServerApi('1'))
+    client = create_db_connection()
     db = client["personal_data_db"]
     collection = db['qa_data_set']
     current_dir = os.path.dirname(__file__)
